@@ -1,0 +1,15 @@
+{
+  "name": "pagameebot",
+  "version": "0.1.0",
+  "description": "@PagameeBot for Telegram",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nanmon",
+  "license": "ISC",
+  "dependencies": {
+    "telegraf": "^4.0.3"
+  }
+}
