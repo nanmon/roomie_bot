@@ -1,5 +1,8 @@
 const { Sequelize, DataTypes, Op } = require('sequelize')
-const { db } = require('../config.json')
+const dbConfig = require('./config')
 
-const sequelize = new Sequelize(db)
+const sequelize = new Sequelize({
+  ...dbConfig,
+  logging: (query, args) => console.log(query, args.bind)
+})
 module.exports = { sequelize, DataTypes, Op }

@@ -5,17 +5,16 @@ const validate = require('../util/validate')
  * 
  * @param {import('telegraf').Context} ctx 
  */
-async function dame(ctx) {
+async function aber(ctx) {
   const { message } = ctx;
-  const { error, quantity, mentioned, sender } = validate.debt(message);
+  const { error, mentioned, sender } = validate.ahimuere(message);
   if (error) return ctx.reply(error);
 
   const account = await Account.createOrUpdate(
     sender.id, 
     mentioned.id, 
-    quantity
+    0,
   )
-  
   let userA = sender, userB = mentioned
   if (account.userA === mentioned.id) {
     userA = mentioned, userB = sender
@@ -26,4 +25,4 @@ async function dame(ctx) {
   else ctx.reply('Tablas 🤝');
 }
 
-module.exports = dame
+module.exports = aber

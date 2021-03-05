@@ -13,6 +13,9 @@ bot.command(
   commands.sticker(config.sticker_command.file_id)
 );
 bot.command('dame', commands.dame)
+bot.command('tedebo', commands.tedebo)
+bot.command('ahimuere', commands.ahimuere)
+bot.command('aber', commands.aber)
 
 bot.launch().then(() => {
   console.log('Bot up 🦶');

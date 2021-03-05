@@ -10,21 +10,24 @@ const Account = sequelize.define("Account", {
     allowNull: false,
   },
   amount: { 
-    type: DataTypes.NUMBER, 
+    type: DataTypes.FLOAT, 
     allowNull: false, 
     defaultValue: 0 
   },
 });
 
 Account.createOrUpdate = async (userA, userB, quantity) => {
-  const account = await Account.findOrCreate({
+  const [account, created] = await Account.findOrCreate({
     where: {
       [Op.or]: [
         {userA, userB},
         {userA: userB, userB: userA},
       ]
-    }
+    },
+    defaults: { userA, userB, quantity }
   })
+  if (created) return account;
+
   if (account.userA === userA) {
     account.amount += quantity
   } else {

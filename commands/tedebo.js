@@ -5,20 +5,20 @@ const validate = require('../util/validate')
  * 
  * @param {import('telegraf').Context} ctx 
  */
-async function dame(ctx) {
+async function tedebo(ctx) {
   const { message } = ctx;
   const { error, quantity, mentioned, sender } = validate.debt(message);
   if (error) return ctx.reply(error);
 
   const account = await Account.createOrUpdate(
-    sender.id, 
     mentioned.id, 
+    sender.id, 
     quantity
   )
   
-  let userA = sender, userB = mentioned
-  if (account.userA === mentioned.id) {
-    userA = mentioned, userB = sender
+  let userA = mentioned, userB = sender
+  if (account.userA === sender.id) {
+    userA = sender, userB = mentioned
   }
   const total = account.amount
   if (total > 0) ctx.reply(`Cuenta: ${total} a favor de ${userA.name}`);
@@ -26,4 +26,4 @@ async function dame(ctx) {
   else ctx.reply('Tablas 🤝');
 }
 
-module.exports = dame
+module.exports = tedebo
