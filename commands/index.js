@@ -1,2 +1,6 @@
-export * from './sticker';
-export * from './dame';
+const sticker = require('./sticker')
+const dame = require('./dame')
+
+module.exports = {
+  sticker, dame
+}

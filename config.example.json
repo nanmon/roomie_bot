@@ -1,7 +1,8 @@
 {
-  "BOT_TOKEN": "abc:123",
-  "STICKER_COMMAND": {
+  "bot_token": "abc:123",
+  "sticker_command": {
     "name": "command",
     "file_id": "sticker_id"
-  }
+  },
+  "db": {}
 }

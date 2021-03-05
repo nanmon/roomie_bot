@@ -2,15 +2,15 @@ const { Telegraf } = require('telegraf');
 const commands = require('./commands');
 const config = require('./config.json');
 
-const bot = new Telegraf(config.BOT_TOKEN)
+const bot = new Telegraf(config.bot_token)
 
 bot.command('quit', (ctx) => {
   // Using context shortcut
   ctx.leaveChat()
 })
 bot.command(
-  config.STICKER_COMMAND.name, 
-  commands.sticker(config.STICKER_COMMAND.file_id)
+  config.sticker_command.name, 
+  commands.sticker(config.sticker_command.file_id)
 );
 bot.command('dame', commands.dame)
 
