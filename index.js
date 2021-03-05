@@ -16,6 +16,7 @@ bot.command('dame', commands.dame)
 bot.command('tedebo', commands.tedebo)
 bot.command('ahimuere', commands.ahimuere)
 bot.command('aber', commands.aber)
+bot.command('limpieza', commands.limpieza)
 
 bot.launch().then(() => {
   console.log('Bot up 🦶');
