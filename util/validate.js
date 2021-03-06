@@ -37,7 +37,7 @@
   if (!['text_mention', 'mention'].includes(mention.type)) 
     return {error: 'Todo mal escroto'};
   const args = message.text.split(' ');
-  if (args.length !== 2) return {error: '/ahimuere @quien'};
+  if (args.length !== 2) return {error: '/command @quien'};
 
   const mentionedUserName = args[1];
   const mentioned = { 

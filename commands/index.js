@@ -1,10 +1,16 @@
-const sticker = require('./sticker')
-const dame = require('./dame')
-const tedebo = require('./tedebo')
-const ahimuere = require('./ahimuere')
-const aber = require('./aber')
-const limpieza = require('./limpieza')
+const { readDirSyncRecursive } = require("../util/files");
+const commands = {};
 
-module.exports = {
-  sticker, dame, tedebo, ahimuere, aber, limpieza
-}
+const files = readDirSyncRecursive(__dirname);
+
+files.forEach((file) => {
+  const fileName = file.split(/\/|\\/).pop();
+
+  if (fileName !== "index.js") {
+    const name = fileName.split(".").shift();
+    const handler = require(file);
+    commands[name] = handler;
+  }
+});
+
+module.exports = commands;
