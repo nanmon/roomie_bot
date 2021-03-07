@@ -16,7 +16,7 @@ const Account = sequelize.define("Account", {
   },
 });
 
-Account.createOrUpdate = async (userA, userB, amount) => {
+Account.findByUsers = async (userA, userB) => {
   const [account, created] = await Account.findOrCreate({
     where: {
       [Op.or]: [
@@ -24,16 +24,21 @@ Account.createOrUpdate = async (userA, userB, amount) => {
         {userA: userB, userB: userA},
       ]
     },
-    defaults: { userA, userB, amount }
-  })
-  if (created) return account;
+    defaults: { userA, userB }
+  });
+  return account;
+}
 
-  if (account.userA === userA) {
-    account.amount += amount
-  } else {
-    account.amount += -amount
-  }
-  return account.save()
+Account.addToAccount = async (userA, userB, amount) => {
+  const account = await Account.findByUsers(userA, userB);
+  account.amount += account.userA === userA ? amount : -amount;
+  return account.save();
+}
+
+Account.setAccountTo = async (userA, userB, amount) => {
+  const account = await Account.findByUsers(userA, userB);
+  account.amount = account.userA === userA ? amount : -amount;
+  return account.save();
 }
 
 module.exports = Account;

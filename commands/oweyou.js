@@ -1,5 +1,11 @@
 const Account = require('../db/models/account')
 const validate = require('../util/validate')
+const { senderAsUser, summaryMessage } = require('../util/format')
+
+const validation = validate.args(
+  validate.number,
+  validate.mention
+)
 
 /**
  * 
@@ -7,25 +13,24 @@ const validate = require('../util/validate')
  */
 const oweyou = (bot, commandName) => {
   bot.command(commandName, async ctx => {
-
     const { message } = ctx;
-    const { error, quantity, mentioned, sender } = validate.debt(message);
-    if (error) return ctx.reply(error);
+    const args = validation(message);
+    if (!args) return ctx.reply(`/${commandName} amount @\\mention`);
+    const [ quantity, mentioned ] = args;
+    const sender = senderAsUser(message.from);
   
-    const account = await Account.createOrUpdate(
-      mentioned.id, 
+    const account = await Account.addToAccount(
       sender.id, 
-      quantity
-    )
-    
-    let userA = mentioned, userB = sender
-    if (account.userA === sender.id) {
-      userA = sender, userB = mentioned
-    }
-    const total = account.amount
-    if (total > 0) ctx.reply(`Cuenta: ${total} a favor de ${userA.name}`);
-    else if (total < 0) ctx.reply(`Cuenta: ${-total} a favor de ${userB.name}`);
-    else ctx.reply('Tablas 🤝');
+      mentioned.id, 
+      -quantity
+    );
+
+    const names = {
+      [sender.id]: sender.name,
+      [mentioned.id]: mentioned.name
+    };
+    const res = summaryMessage(names, account)
+    ctx.reply(res);
   });
 }
 

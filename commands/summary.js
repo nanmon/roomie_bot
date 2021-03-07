@@ -1,5 +1,8 @@
 const Account = require('../db/models/account')
 const validate = require('../util/validate')
+const { senderAsUser, summaryMessage } = require('../util/format')
+
+const validation = validate.args(validate.mention);
 
 /**
  * 
@@ -8,23 +11,24 @@ const validate = require('../util/validate')
 const summary = (bot, commandName) => {
   bot.command(commandName, async ctx => {
     const { message } = ctx;
-    const { error, mentioned, sender } = validate.ahimuere(message);
-    if (error) return ctx.reply(error);
+    console.log(message.entities)
+    const args = validation(message);
+    if (!args) return ctx.reply(`/${commandName} @\\mention`);
+    const [ mentioned ] = args;
+    const sender = senderAsUser(message.from);
   
-    const account = await Account.createOrUpdate(
+    const account = await Account.findByUsers(
       sender.id, 
-      mentioned.id, 
-      0,
-    )
-    let userA = sender, userB = mentioned
-    if (account.userA === mentioned.id) {
-      userA = mentioned, userB = sender
-    }
-    const total = account.amount
-    if (total > 0) ctx.reply(`Cuenta: ${total} a favor de ${userA.name}`);
-    else if (total < 0) ctx.reply(`Cuenta: ${-total} a favor de ${userB.name}`);
-    else ctx.reply('Tablas 🤝');
-  })
+      mentioned.id
+    );
+
+    const names = {
+      [sender.id]: sender.name,
+      [mentioned.id]: mentioned.name
+    };
+    const res = summaryMessage(names, account)
+    ctx.reply(res);
+  });
 }
 
 module.exports = summary

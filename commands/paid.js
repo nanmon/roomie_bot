@@ -1,5 +1,8 @@
 const Account = require('../db/models/account')
 const validate = require('../util/validate')
+const { senderAsUser, summaryMessage } = require('../util/format')
+
+const validation = validate.args(validate.mention)
 
 /**
  * 
@@ -8,17 +11,23 @@ const validate = require('../util/validate')
 const paid = (bot, commandName) => {
   bot.command(commandName, async ctx => {
     const { message } = ctx;
-    const { error, mentioned, sender } = validate.ahimuere(message);
-    if (error) return ctx.reply(error);
+    const args = validation(message);
+    if (!args) return ctx.reply(`/${commandName} @\\mention`);
+    const [ mentioned ] = args;
+    const sender = senderAsUser(message.from);
   
-    const account = await Account.createOrUpdate(
+    const account = await Account.setAccountTo(
       sender.id, 
       mentioned.id, 
-      0,
-    )
-    account.amount = 0;
-    await account.save();
-    ctx.reply('Tablas 🤝');
+      0
+    );
+
+    const names = {
+      [sender.id]: sender.name,
+      [mentioned.id]: mentioned.name
+    };
+    const res = summaryMessage(names, account)
+    ctx.reply(res);
   });
 }
 
