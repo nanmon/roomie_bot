@@ -36,7 +36,9 @@ const compose = (...fns) => message => {
 }
 
 const or = (...fns) => message => {
-  return fns.find(fn => fn(message))
+  const found = fns.find(fn => fn(message))
+  if (!found) return null;
+  return found(message);
 }
 
 module.exports = { number, mention, args, compose, or }

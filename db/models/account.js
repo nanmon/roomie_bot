@@ -29,6 +29,17 @@ Account.findByUsers = async (userA, userB) => {
   return account;
 }
 
+Account.whereUser = user => {
+  return Account.findAll({
+    where: {
+      [Op.or]: [
+        {userA: user},
+        {userB: user},
+      ]
+    }
+  });
+}
+
 Account.addToAccount = async (userA, userB, amount) => {
   const account = await Account.findByUsers(userA, userB);
   account.amount += account.userA === userA ? amount : -amount;

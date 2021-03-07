@@ -4,20 +4,6 @@ const config = require('./config.json');
 
 const bot = new Telegraf(config.bot_token)
 
-// bot.command('quit', (ctx) => {
-//   // Using context shortcut
-//   ctx.leaveChat()
-// })
-// bot.command(
-//   config.sticker_command.name, 
-//   commands.sticker(config.sticker_command.file_id)
-// );
-// bot.command('dame', commands.dame)
-// bot.command('tedebo', commands.tedebo)
-// bot.command('ahimuere', commands.ahimuere)
-// bot.command('aber', commands.aber)
-// bot.command('limpieza', commands.limpieza)
-
 Object.entries(commands).forEach(([name, setup]) => {
   const args = config.commands[name];
   if (!args) return;
