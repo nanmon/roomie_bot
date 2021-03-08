@@ -33,9 +33,9 @@ const summary = (bot, commandName) => {
     } else {
       const summaries = (await Account.whereUser(sender.id)).map(account => {
         if(account.userA === sender.id) {
-          return `${account.userB}: ${-account.amount}`
+          return `${account.userB}: ${account.amount}`
         } else {
-          return `${account.userA}: ${account.amount}`
+          return `${account.userA}: ${-account.amount}`
         }
       }).join('\n');
       ctx.reply(`
