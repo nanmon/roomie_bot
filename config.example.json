@@ -1,8 +1,18 @@
 {
-  "bot_token": "abc:123",
-  "sticker_command": {
-    "name": "command",
-    "file_id": "sticker_id"
+  "bot_token": "get this from @BotFather telegram bot",
+  "db": {
+    "your db configuration": "for sequelize"
   },
-  "db": {}
+  "commands": {
+    "summary": ["new-name-for-summary-command"],
+    "paid": ["paid"],
+    "oweme": ["oweme"],
+    "chores": ["chores", {
+      "people": ["to", "assign", "chores"],
+      "chores": ["to", "assign", "to people"],
+      "rrule": "rrule string, generate one from https://jakubroztocil.github.io/rrule"
+    }],
+    "oweyou": ["oweyou"],
+    "sticker": ["sticker", "sticker file_id"]
+  }
 }
