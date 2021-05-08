@@ -13,6 +13,7 @@
       "rrule": "rrule string, generate one from https://jakubroztocil.github.io/rrule"
     }],
     "oweyou": ["oweyou"],
+    "eth": ["eth", "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"],
     "sticker": ["sticker", "sticker file_id"]
   }
 }
