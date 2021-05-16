@@ -15,7 +15,11 @@
       "rrule": "rrule string, generate one from https://jakubroztocil.github.io/rrule"
     }],
     "oweyou": ["oweyou"],
-    "eth": ["eth", "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"],
+    "fetch": ["fetch", {
+      "url": "https://some-url.com",
+      "options": {"node-fetch": "options arg"},
+      "format": "see lodash.template docs for usage and commands/fetch.js for available functions"
+    }],
     "sticker": ["sticker", "sticker file_id"]
   }
 }
