@@ -1,10 +1,12 @@
 {
   "bot_token": "get this from @BotFather telegram bot",
+  "version": "2",
   "db": {
     "your db configuration": "for sequelize"
   },
   "commands": {
-    "summary": ["new-name-for-summary-command"],
+    "example-custom-name-for-command": ["command-filename", {"command": "config"}],
+    "summary": ["summary"],
     "paid": ["paid"],
     "oweme": ["oweme"],
     "chores": ["chores", {
