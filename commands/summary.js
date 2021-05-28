@@ -31,16 +31,22 @@ const summary = (bot, commandName) => {
       const res = summaryMessage(names, account)
       ctx.reply(res);
     } else {
-      const summaries = (await Account.whereUser(sender.id)).map(account => {
-        if(account.userA === sender.id) {
-          return `${account.userB.substr(1)}: ${account.amount}`
-        } else {
-          return `${account.userA.substr(1)}: ${-account.amount}`
-        }
-      }).join('\n');
-      ctx.reply(`
-        Paguenle al ${sender.name}:\n${summaries}
-      `)
+      const summaries = (await Account.whereUser(sender.id))
+        .filter(account => account.amount !== 0)
+        .map(account => {
+          if(account.userA === sender.id) {
+            return `${account.userB.substr(1)}: ${account.amount}`
+          } else {
+            return `${account.userA.substr(1)}: ${-account.amount}`
+          }
+        }).join('\n');
+      if (summaries.length === 0) {
+        ctx.reply('Nadie te debe nada');
+      } else {
+        ctx.reply(`
+          Paguenle al ${sender.name}:\n${summaries}
+        `)
+      }
     }
   });
 }
