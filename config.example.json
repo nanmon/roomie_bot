@@ -20,6 +20,7 @@
       "options": {"node-fetch": "options arg"},
       "format": "see lodash.template docs for usage and commands/fetch.js for available functions"
     }],
+    "ip": ["ip"],
     "sticker": ["sticker", "sticker file_id"]
   }
 }
