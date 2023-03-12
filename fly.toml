@@ -1,0 +1,19 @@
+# fly.toml file generated for roomiebot on 2023-03-12T12:50:11-07:00
+
+app = "roomiebot"
+kill_signal = "SIGINT"
+kill_timeout = 5
+primary_region = "gdl"
+processes = []
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+
+[experimental]
+  auto_rollback = true
+
+[mounts]
+  source="roomie_data"
+  destination="/data"
